@@ -1,0 +1,220 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<meta name="viewport" content="width=320, initial-scale=1">
+<link rel="apple-touch-icon" href="../buttons/arboretum-logo.png" />
+<title>Trees of Vanderbilt</title>
+
+<style type="text/css">
+@import "../treebook-composite.css";
+</style>
+</head>
+
+<body>
+<script type="text/javascript">
+
+// calculations to set up page buttons and loaded image
+page=60;
+if (page<10)
+	{pageString="00"+page;}
+else
+	{
+	if (page<100)
+		{pageString="0"+page;}
+	else
+		{pageString=page;}
+	}
+nPage=page+1;
+if (nPage<10)
+	{nPageString="00"+nPage;}
+else
+	{
+	if (nPage<100)
+		{nPageString="0"+nPage;}
+	else
+		{nPageString=nPage;}
+	}
+pPage=page-1;
+if (pPage<10)
+	{pPageString="00"+pPage;}
+else
+	{
+	if (pPage<100)
+		{pPageString="0"+pPage;}
+	else
+		{pPageString=nPage;}
+	}
+document.title ="Trees of Vanderbilt p. "+page;
+
+function nextPage()
+	{
+	location.assign(nPageString);
+	}
+function previousPage()
+	{
+	location.assign(pPageString);
+	}
+	
+// Functions to retrieve XML from files
+// Note: IE and Chrome will not process these HttpRequests on local files,
+// but will through the Internet.
+function loadXMLDoc(dname)
+	{
+	if (window.XMLHttpRequest) // IE doesn't support
+		{
+		xhttp=new XMLHttpRequest();
+		}
+	else
+		{
+		xhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+	xhttp.open("GET",dname,false);
+	xhttp.send("");
+	return xhttp.responseXML;
+	}
+	
+if ('\v' != 'v')  // create serializer if not IE
+	{
+	var serializer = new XMLSerializer();
+	}
+// AJAX server request
+xml=loadXMLDoc("page-format.xml");
+
+// recordSet is the root node of the document (xml element named "root")
+recordSet=xml.documentElement;
+
+// get the XHTML blobs to paste in
+try{
+temp=recordSet.getElementsByTagName("r1c1");
+temp1=temp[0].firstChild;
+if (temp1.xml) 	{vr1c1=temp1.xml;} //only IE has .xml attribute
+else {vr1c1=serializer.serializeToString(temp1);}  // other browsers use XMLSerializer from above
+} catch(err) {vr1c1="";}  // catches the case were the loaded XML document doesn't have that tag
+
+try{
+temp=recordSet.getElementsByTagName("r1c2");
+temp1=temp[0].firstChild;
+if (temp1.xml) 	{vr1c2=temp1.xml;} else {vr1c2=serializer.serializeToString(temp1);}
+} catch(err) {vr1c2="";}
+
+try{
+temp=recordSet.getElementsByTagName("r1c3");
+temp1=temp[0].firstChild;
+if (temp1.xml) 	{vr1c3=temp1.xml;} else {vr1c3=serializer.serializeToString(temp1);}
+} catch(err) {vr1c3="";}
+
+try{
+temp=recordSet.getElementsByTagName("r2c1");
+temp1=temp[0].firstChild;
+if (temp1.xml) 	{vr2c1=temp1.xml;} else {vr2c1=serializer.serializeToString(temp1);}
+} catch(err) {vr2c1="";}
+
+try{
+temp=recordSet.getElementsByTagName("r2c3");
+temp1=temp[0].firstChild;
+if (temp1.xml) 	{vr2c3=temp1.xml;} else {vr2c3=serializer.serializeToString(temp1);}
+} catch(err) {vr2c3="";}
+
+try{
+temp=recordSet.getElementsByTagName("r3c1");
+temp1=temp[0].firstChild;
+if (temp1.xml) 	{vr3c1=temp1.xml;} else {vr3c1=serializer.serializeToString(temp1);}
+} catch(err) {vr3c1="";}
+
+try{
+temp=recordSet.getElementsByTagName("r3c2");
+temp1=temp[0].firstChild;
+if (temp1.xml) 	{vr3c2=temp1.xml;} else {vr3c2=serializer.serializeToString(temp1);}
+} catch(err) {vr3c2="";}
+
+try{
+temp=recordSet.getElementsByTagName("r3c3");
+temp1=temp[0].firstChild;
+if (temp1.xml) 	{vr3c3=temp1.xml;} else {vr3c3=serializer.serializeToString(temp1);}
+} catch(err) {vr3c3="";}
+
+// get the image size adjustment values
+temp=recordSet.getElementsByTagName("vImgAdjust");
+vImgAdj=temp[0].firstChild.nodeValue;
+vImgAdj=vImgAdj/1; // force numeric
+
+temp=recordSet.getElementsByTagName("hImgAdjust");
+hImgAdj=temp[0].firstChild.nodeValue;
+hImgAdj=hImgAdj/1; // force numeric
+
+temp=recordSet.getElementsByTagName("fullButtonWidth");
+buttonWidthInt=temp[0].firstChild.nodeValue;
+buttonWidthInt=buttonWidthInt/1; // force numeric
+
+// makes buttons half-sized if screen is small
+if (document.documentElement.clientWidth<400)
+	{
+	buttonWidth=buttonWidthInt/2+"px";
+	tempAdj=document.documentElement.clientWidth;
+	imgWidth=tempAdj-hImgAdj+buttonWidthInt;
+	}
+else
+	{
+	buttonWidth=buttonWidthInt+"px";
+	imgWidth=document.documentElement.clientWidth-hImgAdj;
+	}
+
+// this javascript is here to optimize the image size to the browser window.  It replaces the default image which is hard-coded 
+// so that search engines will actually find it
+imgHeight=document.documentElement.clientHeight-vImgAdj;
+aspectRatio=imgHeight/imgWidth;
+if (aspectRatio<1.7)
+	{imgPaste='height="'+imgHeight+'"';}
+else
+	{imgPaste='width="'+imgWidth+'"';}
+</script>
+
+<table>
+<tr><td><span id="r1c1"></span></td><td><div id="r1c2"></div></td><td><span id="r1c3"></span></td></tr>
+<tr><td><span id="r2c1"></span></td><td><a href="http://bioimages.vanderbilt.edu/vanderbilt/7-205.htm"><span id="r2c2"><img alt="Image of a page from of the Trees of Vanderbilt" title="Image of a page from of the Trees of Vanderbilt" height="785" src="trees-of-vu060.jpg" /></span></a></td><td><span id="r2c3"></span></td></tr>
+
+<tr><td><span id="r3c1"></span></td><td><span id="r3c2"></span></td><td><span id="r3c3"></span></td></tr>
+</table>
+<h4>Tree still present in 2014.<br/>
+Click on page image to view information about the tree.<br/><br/></h4>
+<h5>(c) 1994 by Vanderbilt University<br/>
+Used here with permission.<br/></h5>
+<table cellpadding="5"><tr>
+<td><a href="http://vanderbilt.edu/trees/"><img alt="Vanderbilt Arboretum logo" height="121" src="../buttons/arboretum-logo.jpg" width="106" /></a><br/></td>
+<td><a href="http://vanderbilt.edu/trees/ofvanderbilt/"><img alt="book page button" src="trees-of-vu-small.jpg" height="150" /></a>
+</td>
+</tr>
+</table><br/>
+
+<script type="text/javascript">
+
+// these are here to make it possible to adjust the appearance without having to change all 100+ html files
+document.getElementById('r1c1').innerHTML=vr1c1;
+document.getElementById('r1c2').innerHTML=vr1c2;
+document.getElementById('r1c3').innerHTML=vr1c3;
+document.getElementById('r2c1').innerHTML=vr2c1;
+document.getElementById('r2c2').innerHTML='<img alt="Image of p.'+page+' of the Trees of Vanderbilt" title="Image of p.'+page+' of the Trees of Vanderbilt" '+imgPaste+' src="trees-of-vu'+pageString+'.jpg" />';
+document.getElementById('r2c3').innerHTML=vr2c3;
+document.getElementById('r3c1').innerHTML=vr3c1;
+document.getElementById('r3c2').innerHTML=vr3c2;
+document.getElementById('r3c3').innerHTML=vr3c3;
+
+// here's where the button size is set
+document.getElementById('pbutton').style.width = buttonWidth;
+document.getElementById('nbutton').style.width = buttonWidth;
+
+// Google Analytics ping
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-45642729-2', 'vanderbilt.edu');
+  ga('send', 'pageview');
+</script>
+
+</body>
+
+</html>

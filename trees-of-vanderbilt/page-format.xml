@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+     <vImgAdjust>55</vImgAdjust>
+     <hImgAdjust>125</hImgAdjust>
+     <fullButtonWidth>58</fullButtonWidth>
+     <r2c1><span><a onclick="previousPage();"><img id="pbutton" class="resizable" alt="previous button" src="../buttons/trees-vu-previous.png" /></a></span></r2c1>
+     <r2c3><span><a onclick="nextPage();"><img id="nbutton" class="resizable" alt="next button" src="../buttons/trees-vu-next.png" /></a></span></r2c3>
+</root>
